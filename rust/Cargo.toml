@@ -1,0 +1,8 @@
+[package]
+name = "game-of-life"
+version = "0.1.0"
+authors = ["Mizki SUZUMORI <mizki9577@gmail.com>"]
+
+[dependencies]
+rand = "0.3"
+pancurses = "0.8"
