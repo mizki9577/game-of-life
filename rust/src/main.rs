@@ -21,7 +21,7 @@ trait State {
 impl State for Matrix {
     fn new(width: usize, height: usize) -> Self {
         let width = width * 2 + 2;
-        let height = height * 2 + 2;
+        let height = height * 4 + 2;
         vec![vec![false; width]; height]
     }
 
@@ -80,27 +80,19 @@ impl State for Matrix {
         let height = self.len();
 
         window.mv(0, 0);
-        for y in (1..height-1).step_by(2) {
+        for y in (1..height-1).step_by(4) {
             for x in (1..width-1).step_by(2) {
-                let ch = match (self[y][x], self[y+1][x], self[y][x+1], self[y+1][x+1]) {
-                    (false, false, false, false) => " ",
-                    (false, false, false, true ) => "▗",
-                    (false, false, true , false) => "▝",
-                    (false, false, true , true ) => "▐",
-                    (false, true , false, false) => "▖",
-                    (false, true , false, true ) => "▄",
-                    (false, true , true , false) => "▞",
-                    (false, true , true , true ) => "▟",
-                    (true , false, false, false) => "▘",
-                    (true , false, false, true ) => "▚",
-                    (true , false, true , false) => "▀",
-                    (true , false, true , true ) => "▜",
-                    (true , true , false, false) => "▌",
-                    (true , true , false, true ) => "▙",
-                    (true , true , true , false) => "▛",
-                    (true , true , true , true ) => "█",
-                };
-                window.addstr(ch);
+                let mut ch = 0x2800;
+                if self[y  ][x  ] { ch |= 0x01; }
+                if self[y+1][x  ] { ch |= 0x02; }
+                if self[y+2][x  ] { ch |= 0x04; }
+                if self[y  ][x+1] { ch |= 0x08; }
+                if self[y+1][x+1] { ch |= 0x10; }
+                if self[y+2][x+1] { ch |= 0x20; }
+                if self[y+3][x  ] { ch |= 0x40; }
+                if self[y+3][x+1] { ch |= 0x80; }
+
+                window.addch(ch);
             }
         }
         window.refresh();
