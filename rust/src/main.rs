@@ -60,14 +60,10 @@ impl State for Matrix {
                     if self[y+1][x  ] { livings += 1; }
                     if self[y+1][x+1] { livings += 1; }
 
-                if self[y][x] {
-                    if livings != 2 && livings != 3 {
-                        next_state[y][x] = false;
-                    }
-                } else {
-                    if livings == 3 {
-                        next_state[y][x] = true;
-                    }
+                if self[y][x] && livings != 2 && livings != 3 {
+                    next_state[y][x] = false;
+                } else if !self[y][x] && livings == 3 {
+                    next_state[y][x] = true;
                 }
             }
         }
