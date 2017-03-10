@@ -1,9 +1,11 @@
 #![feature(step_by)]
 #![feature(type_ascription)]
+#![feature(try_from)]
 
 extern crate rand;
 extern crate pancurses;
 
+use std::convert::TryFrom;
 use rand::Rng;
 use pancurses::Window;
 use pancurses::Input::Character;
@@ -88,7 +90,9 @@ impl State for Matrix {
                 if self[y+3][x  ] { ch |= 0x40; }
                 if self[y+3][x+1] { ch |= 0x80; }
 
-                window.addch(ch);
+                if let Ok(ch) = char::try_from(ch) {
+                    window.addstr(ch.to_string().as_str());
+                }
             }
         }
         window.refresh();
