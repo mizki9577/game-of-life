@@ -1,5 +1,4 @@
 #![feature(step_by)]
-#![feature(type_ascription)]
 #![feature(try_from)]
 
 extern crate rand;
@@ -14,8 +13,7 @@ type Matrix = Vec<Vec<bool>>;
 
 trait State {
     fn new(width: usize, height: usize) -> Self;
-    fn randomize(&mut self) -> &mut Self;
-    fn finalize(&self) -> Self;
+    fn randomize(&mut self) -> &Self;
     fn next(&self) -> Self;
     fn print(&self, window: &Window);
 }
@@ -27,7 +25,7 @@ impl State for Matrix {
         vec![vec![false; width]; height]
     }
 
-    fn randomize(&mut self) -> &mut Self {
+    fn randomize(&mut self) -> &Self {
         let mut rng = rand::thread_rng();
         let width = self[0].len();
         let height = self.len();
@@ -39,10 +37,6 @@ impl State for Matrix {
         }
 
         self
-    }
-
-    fn finalize(&self) -> Self {
-        self.clone()
     }
 
     fn next(&self) -> Self {
@@ -106,7 +100,8 @@ fn main() {
     let width  = window.get_max_x() as usize;
     let height = window.get_max_y() as usize;
 
-    let mut prev_state = (State::new(width, height): Matrix).randomize().finalize();
+    let mut prev_state: Matrix = State::new(width, height);
+    prev_state.randomize();
 
     loop {
         let state = prev_state.next();
