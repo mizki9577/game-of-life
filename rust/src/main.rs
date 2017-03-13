@@ -110,6 +110,7 @@ fn main() {
 
         match window.getch() {
             Some(Character('q')) => break,
+            Some(Character('r')) => { prev_state.randomize(); },
             _                    => (),
         }
     }
