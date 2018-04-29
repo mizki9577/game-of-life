@@ -4,5 +4,5 @@ version = "0.1.0"
 authors = ["Mizki SUZUMORI <mizki9577@gmail.com>"]
 
 [dependencies]
-rand = "0.3"
-pancurses = "0.8"
+rand = "0.5"
+pancurses = "0.16"
