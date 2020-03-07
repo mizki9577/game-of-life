@@ -2,7 +2,8 @@
 name = "game-of-life"
 version = "0.1.0"
 authors = ["Mizki SUZUMORI <mizki9577@gmail.com>"]
+edition = "2018"
 
 [dependencies]
-rand = "0.5"
 pancurses = "0.16"
+rand = "0.7"
